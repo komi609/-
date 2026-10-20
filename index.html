@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f0">
+  <title>Training Log — スクワット（SW）10週間プログラム</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20251f;
+      --muted: #777e73;
+      --line: #e7e9e1;
+      --paper: #fff;
+      --canvas: #f5f5f0;
+      --green: #426b48;
+      --green-dark: #315537;
+      --green-pale: #eaf1e8;
+      --orange: #d97848;
+      --shadow: 0 10px 32px rgba(34, 46, 31, .06);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1180px; margin: 0 auto; padding: 26px 28px 56px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px;
+      background: var(--green); color: white; font-size: 21px; font-weight: 800;
+    }
+    .brand-name { font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
+    .brand-sub { color: var(--muted); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+    .top-actions { display: flex; gap: 10px; }
+    .lift-tabs { display: flex; width: fit-content; gap: 5px; margin: -12px 0 18px; padding: 4px; border: 1px solid var(--line); border-radius: 11px; background: #eceee8; }
+    .lift-tab { min-height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; color: #697065; font-size: 12px; font-weight: 700; }
+    .lift-tab[aria-pressed="true"] { background: white; color: var(--green-dark); box-shadow: 0 1px 4px rgba(30, 40, 28, .1); }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 40px; padding: 0 15px; border: 1px solid var(--line); border-radius: 9px;
+      background: var(--paper); color: var(--ink); font-weight: 650; transition: .15s ease;
+    }
+    .button:hover { border-color: #b7c4b1; transform: translateY(-1px); }
+    .button.primary { border-color: var(--green); background: var(--green); color: white; }
+    .button.primary:hover { background: var(--green-dark); }
+    .hero {
+      position: relative; overflow: hidden; padding: 30px 34px; border-radius: 18px;
+      background: #263b2c; color: white; box-shadow: var(--shadow);
+    }
+    .hero::after {
+      position: absolute; top: -120px; right: 12%; width: 300px; height: 300px; border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%; content: ""; box-shadow: 0 0 0 38px rgba(255,255,255,.035), 0 0 0 78px rgba(255,255,255,.025);
+      pointer-events: none;
+    }
+    .eyebrow { color: #b9c9b5; font-size: 11px; font-weight: 750; letter-spacing: .14em; }
+    .hero-main { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+    h1 { margin: 7px 0 5px; font-size: clamp(24px, 4vw, 36px); line-height: 1.2; letter-spacing: -.04em; }
+    .hero-copy { margin: 0; color: #c6d0c2; }
+    .progress-box { min-width: 205px; }
+    .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #d8e0d5; font-size: 12px; }
+    .progress-track { height: 7px; overflow: hidden; border-radius: 10px; background: rgba(255,255,255,.17); }
+    .progress-fill { height: 100%; border-radius: inherit; background: #a6cb91; transition: width .25s ease; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0 30px; }
+    .stat { padding: 17px 19px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
+    .stat-label { color: var(--muted); font-size: 12px; }
+    .stat-value { margin-top: 4px; font-size: 23px; font-weight: 780; letter-spacing: -.04em; }
+    .stat-unit { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: 550; letter-spacing: 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    h2 { margin: 0; font-size: 18px; letter-spacing: -.025em; }
+    .section-hint { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr); align-items: start; gap: 18px; }
+    .panel { border: 1px solid var(--line); border-radius: 14px; background: var(--paper); box-shadow: var(--shadow); }
+    .plan-panel { overflow: hidden; }
+    .week-list { display: grid; gap: 0; }
+    .week-card {
+      display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; align-items: center; gap: 13px;
+      width: 100%; padding: 14px 17px; border: 0; border-bottom: 1px solid #eff0eb; background: white; color: inherit; text-align: left;
+      transition: background .15s ease;
+    }
+    .week-card:last-child { border-bottom: 0; }
+    .week-card:hover { background: #fafbf8; }
+    .week-card.selected { background: #f1f6ef; box-shadow: inset 3px 0 var(--green); }
+    .week-card.complete .week-number { background: var(--green); color: white; }
+    .week-number { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: #f0f1ec; color: #686f64; font-size: 12px; font-weight: 750; }
+    .week-title { font-size: 13px; font-weight: 730; }
+    .week-details { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .week-target { min-width: 87px; text-align: right; }
+    .week-weight { display: block; font-size: 14px; font-weight: 780; }
+    .week-volume { display: block; color: var(--muted); font-size: 11px; }
+    .phase-pill { display: inline-block; margin-top: 5px; padding: 2px 7px; border-radius: 20px; background: #f1f3ef; color: #687261; font-size: 10px; }
+    .week-card[data-week="10"] .phase-pill, .week-card[data-week="9"] .phase-pill { background: #fbefe9; color: #a85b36; }
+    .form-panel { position: sticky; top: 16px; padding: 21px; }
+    .form-heading { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .form-heading h2 { font-size: 17px; }
+    .target-line { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .phase-label { flex: none; padding: 5px 9px; border-radius: 20px; background: var(--green-pale); color: var(--green-dark); font-size: 10px; font-weight: 720; }
+    .coach-note { margin: 15px 0 17px; padding: 11px 12px; border-left: 3px solid #9eb795; border-radius: 0 8px 8px 0; background: #f7f8f4; color: #626a5f; font-size: 11px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: grid; gap: 5px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: #636a60; font-size: 11px; font-weight: 650; }
+    input, textarea {
+      width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #dfe2da; border-radius: 8px;
+      outline: none; background: #fff; color: var(--ink); transition: border-color .15s, box-shadow .15s;
+    }
+    input:focus, textarea:focus { border-color: #7b9b78; box-shadow: 0 0 0 3px rgba(66,107,72,.11); }
+    textarea { min-height: 68px; resize: vertical; }
+    .save-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+    .save-row .button { flex: 1; }
+    .status { min-height: 18px; margin-top: 8px; color: var(--green-dark); font-size: 11px; }
+    .history { margin-top: 21px; padding-top: 17px; border-top: 1px solid var(--line); }
+    .history-title { display: flex; justify-content: space-between; margin-bottom: 9px; font-size: 12px; font-weight: 750; }
+    .history-empty { color: var(--muted); font-size: 11px; }
+    .entry { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-top: 1px solid #f0f1ed; }
+    .entry:first-of-type { border-top: 0; }
+    .entry-main { min-width: 0; }
+    .entry-date { font-size: 11px; font-weight: 720; }
+    .entry-stats { color: #5c6558; font-size: 11px; }
+    .entry-note { margin-top: 3px; overflow-wrap: anywhere; color: var(--muted); font-size: 11px; }
+    .delete-entry { align-self: start; border: 0; background: transparent; color: #a3a89f; font-size: 17px; line-height: 1; }
+    .delete-entry:hover { color: #b24f3c; }
+    .program-dialog { width: min(760px, calc(100% - 28px)); max-width: 760px; max-height: 90vh; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 80px rgba(20, 30, 20, .24); }
+    .program-dialog::backdrop { background: rgba(25, 34, 26, .48); backdrop-filter: blur(2px); }
+    .editor-header { display: flex; align-items: start; justify-content: space-between; gap: 16px; padding: 20px 22px 14px; border-bottom: 1px solid var(--line); }
+    .editor-header h2 { font-size: 18px; }
+    .editor-header p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .editor-close { border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; }
+    .editor-list { display: grid; max-height: calc(90vh - 155px); gap: 10px; padding: 14px 22px; overflow-y: auto; }
+    .editor-week { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px 10px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+    .editor-week-title { grid-column: 1 / -1; font-size: 12px; font-weight: 750; }
+    .editor-week .field { min-width: 0; }
+    .editor-week input, .editor-week textarea { min-height: 36px; padding: 6px 8px; font-size: 12px; }
+    .editor-week .field.note { grid-column: 1 / -1; }
+    .editor-week textarea { min-height: 52px; }
+    .editor-footer { display: flex; justify-content: end; gap: 9px; padding: 12px 22px 18px; border-top: 1px solid var(--line); background: white; }
+    .footer-note { margin-top: 19px; color: var(--muted); font-size: 11px; text-align: center; }
+    .toast { position: fixed; right: 22px; bottom: 22px; z-index: 3; padding: 11px 15px; border-radius: 9px; background: #263b2c; color: white; box-shadow: var(--shadow); font-size: 12px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .form-panel { position: static; }
+      .hero-main { align-items: start; flex-direction: column; }
+      .progress-box { width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .shell { padding: 17px 14px 38px; }
+      .topbar { align-items: start; margin-bottom: 18px; }
+      .brand-mark { width: 37px; height: 37px; }
+      .top-actions { gap: 6px; }
+      .top-actions .button { min-height: 36px; padding: 0 9px; font-size: 11px; }
+      .lift-tabs { margin-top: -4px; }
+      .lift-tab { padding: 0 11px; }
+      .hero { padding: 23px 20px; }
+      .stats { gap: 8px; margin: 12px 0 23px; }
+      .stat { padding: 12px 10px; }
+      .stat-value { font-size: 19px; }
+      .week-card { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 8px; padding: 12px 10px; }
+      .week-number { width: 38px; height: 38px; }
+      .week-target { min-width: 68px; }
+      .week-weight { font-size: 12px; }
+      .week-details { font-size: 10px; }
+      .form-panel { padding: 17px; }
+      .editor-header { padding: 17px 16px 12px; }
+      .editor-list { max-height: calc(90vh - 155px); padding: 12px 16px; }
+      .editor-week { grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
+      .editor-week-title, .editor-week .field.note { grid-column: 1 / -1; }
+      .editor-footer { padding: 10px 16px 15px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <div class="brand-name">Training Log</div>
+          <div class="brand-sub">10 week strength program</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="button" id="export-button" type="button" aria-label="記録をCSVで書き出す">↓ CSV書き出し</button>
+      </div>
+    </header>
+
+    <nav class="lift-tabs" aria-label="トレーニング種目">
+      <button class="lift-tab" id="tab-squat" type="button" aria-pressed="true" data-lift="squat">スクワット（SW）</button>
+      <button class="lift-tab" id="tab-deadlift" type="button" aria-pressed="false" data-lift="deadlift">デッドリフト（DR）</button>
+    </nav>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="eyebrow">YOUR TRAINING JOURNAL</div>
+      <div class="hero-main">
+        <div>
+          <h1 id="page-title">スクワット（SW）10週間プログラム</h1>
+          <p class="hero-copy">積み重ねた一回が、次の一回をつくる。</p>
+        </div>
+        <div class="progress-box">
+          <div class="progress-label"><span>プログラムの記録</span><strong id="progress-text">0 / 10週</strong></div>
+          <div class="progress-track" role="progressbar" aria-label="記録した週" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="記録の概要">
+      <div class="stat"><div class="stat-label">記録した週</div><div class="stat-value" id="stat-weeks">0<span class="stat-unit">/ 10週</span></div></div>
+      <div class="stat"><div class="stat-label">トレーニング回数</div><div class="stat-value" id="stat-sessions">0<span class="stat-unit">回</span></div></div>
+      <div class="stat"><div class="stat-label">次の目標重量</div><div class="stat-value" id="stat-next">95<span class="stat-unit">kg</span></div></div>
+    </section>
+
+    <div class="section-head">
+      <div><h2>プログラム</h2><p class="section-hint">週を選択して、トレーニングの実績を記録できます。</p></div>
+      <button class="button" id="edit-program-button" type="button">メニューを編集</button>
+    </div>
+    <section class="layout">
+      <div class="panel plan-panel"><div class="week-list" id="week-list" aria-label="10週間のトレーニング計画"></div></div>
+      <section class="panel form-panel" aria-live="polite">
+        <div class="form-heading">
+          <div><h2 id="form-title">第1週の記録</h2><div class="target-line" id="target-line"></div></div>
+          <span class="phase-label" id="phase-label"></span>
+        </div>
+        <p class="coach-note" id="coach-note"></p>
+        <form id="log-form">
+          <div class="field-grid">
+            <div class="field full"><label for="session-date">トレーニング日</label><input id="session-date" name="date" type="date" required></div>
+            <div class="field"><label for="weight">実施重量（kg）</label><input id="weight" name="weight" type="number" min="0" max="1000" step="0.5" required></div>
+            <div class="field"><label for="reps">実施レップ数</label><input id="reps" name="reps" type="number" min="1" max="100" step="1" required></div>
+            <div class="field"><label for="sets">実施セット数</label><input id="sets" name="sets" type="number" min="1" max="50" step="1" required></div>
+            <div class="field full"><label for="note">メモ・体感</label><textarea id="note" name="note" maxlength="500" placeholder="フォーム、調子、気づいたことなど"></textarea></div>
+          </div>
+          <div class="save-row"><button class="button primary" type="submit">＋ 記録を保存</button></div>
+          <div class="status" id="form-status" role="status"></div>
+        </form>
+        <div class="history">
+          <div class="history-title"><span>この週の記録</span><span id="entry-count">0件</span></div>
+          <div id="history-list"></div>
+        </div>
+      </section>
+    </section>
+    <p class="footer-note">記録はこのブラウザー内に保存されます。別の端末やブラウザーとは同期されません。</p>
+  </main>
+  <dialog class="program-dialog" id="program-dialog" aria-labelledby="editor-title">
+    <form id="program-editor-form">
+      <div class="editor-header">
+        <div><h2 id="editor-title">トレーニングメニューを編集</h2><p>変更はこの種目のメニューに保存されます。記録済みの実績には影響しません。</p></div>
+        <button class="editor-close" id="close-editor-button" type="button" aria-label="閉じる">×</button>
+      </div>
+      <div class="editor-list" id="editor-list"></div>
+      <div class="editor-footer">
+        <button class="button" id="cancel-editor-button" type="button">キャンセル</button>
+        <button class="button primary" type="submit">メニューを保存</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const programs = {
+      squat: [
+      { week: 1, phase: "ボリューム期（導入）", shortPhase: "ボリューム", weight: 95, reps: 10, sets: 3, note: "フォームと軌道の確認。余裕がある軽さ。" },
+      { week: 2, phase: "ボリューム期", shortPhase: "ボリューム", weight: 102.5, reps: 10, sets: 3, note: "息が上がりますが、まだコントロール可能。" },
+      { week: 3, phase: "ボリューム期", shortPhase: "ボリューム", weight: 110, reps: 8, sets: 3, note: "ここから少しずつ重さを感じ始めます。" },
+      { week: 4, phase: "ボリューム期（ピーク）", shortPhase: "ボリューム", weight: 115, reps: 8, sets: 3, note: "筋肥大・筋持久力の限界付近。粘りどころ。" },
+      { week: 5, phase: "ディロード（積極的疲労回復）", shortPhase: "ディロード", weight: 95, reps: 5, sets: 2, note: "後半の強度上昇に備え、関節と神経を休める週。" },
+      { week: 6, phase: "高強度期（移行）", shortPhase: "高強度", weight: 122.5, reps: 5, sets: 3, note: "ここから重さに慣れる神経系の強化。" },
+      { week: 7, phase: "高強度期", shortPhase: "高強度", weight: 127.5, reps: 5, sets: 3, note: "1発の重さを意識。体幹の固定を厳格に。" },
+      { week: 8, phase: "高強度期（ピーク）", shortPhase: "高強度", weight: 132.5, reps: 3, sets: 3, note: "潰れないよう集中。セーフティを必ずセット。" },
+      { week: 9, phase: "テーパリング（調整）", shortPhase: "調整", weight: 110, reps: 3, sets: 2, note: "疲労を完全に抜き、Max挑戦へのキレを作る。" },
+      { week: 10, phase: "Max挑戦週", shortPhase: "MAX", weight: 145, reps: 1, sets: 1, maxSets: 2, note: "145kgに挑戦。調子が良ければ147.5〜150kgへ。" }
+      ],
+      deadlift: [
+        { week: 1, phase: "導入（フォーム意識）", shortPhase: "フォーム", weight: 105, reps: 8, sets: 3, note: "フォームを意識して、丁寧に引く。" },
+        { week: 2, phase: "導入（フォーム意識）", shortPhase: "フォーム", weight: 105, reps: 8, sets: 3, note: "フォームを意識して、丁寧に引く。" },
+        { week: 3, phase: "ボリューム期", shortPhase: "ボリューム", weight: 115, reps: 6, sets: 3, note: "しっかり引き切る。" },
+        { week: 4, phase: "ボリューム期", shortPhase: "ボリューム", weight: 115, reps: 6, sets: 3, note: "しっかり引き切る。" },
+        { week: 5, phase: "ディロード", shortPhase: "ディロード", weight: 100, reps: 5, sets: 2, note: "腰を絶対に休める週。疲労回復を優先する。" },
+        { week: 6, phase: "高強度期", shortPhase: "高強度", weight: 130, reps: 5, sets: 3, note: "ここからベルト必須。" },
+        { week: 7, phase: "高強度期", shortPhase: "高強度", weight: 130, reps: 5, sets: 3, note: "ベルト必須。体幹をしっかり固定する。" },
+        { week: 8, phase: "高強度期（ピーク）", shortPhase: "高強度", weight: 140, reps: 3, sets: 3, note: "重さに負けず、集中して引き切る。" },
+        { week: 9, phase: "テーパリング（調整）", shortPhase: "調整", weight: 110, reps: 3, sets: 2, note: "疲労抜きを優先し、Max挑戦に備える。" },
+        { week: 10, phase: "Max挑戦週", shortPhase: "MAX", weight: 160, reps: 1, sets: 1, maxSets: 2, note: "160kg〜に挑戦。調子に合わせてMax更新を目指す。" }
+      ]
+    };
+    const defaultPrograms = JSON.parse(JSON.stringify(programs));
+    const exerciseNames = { squat: "スクワット（SW）", deadlift: "デッドリフト（DR）" };
+    const storageKeys = { squat: "training-log-10-week-v1", deadlift: "training-log-deadlift-10-week-v1" };
+    const planStorageKeys = { squat: "training-plan-squat-v1", deadlift: "training-plan-deadlift-v1" };
+    let activeLift = "squat";
+    let selectedWeek = 1;
+    let entries = loadEntries(activeLift);
+
+    function loadPrograms() {
+      Object.keys(programs).forEach(lift => {
+        try {
+          const raw = localStorage.getItem(planStorageKeys[lift]);
+          if (!raw) return;
+          const saved = JSON.parse(raw);
+          if (!Array.isArray(saved) || saved.length !== 10 || !saved.every((item, index) =>
+            item && item.week === index + 1 && Number.isFinite(item.weight) &&
+            Number.isInteger(item.reps) && item.reps >= 1 && item.reps <= 100 &&
+            Number.isInteger(item.sets) && item.sets >= 1 && item.sets <= 50 &&
+            (item.maxSets === undefined || (Number.isInteger(item.maxSets) && item.maxSets >= item.sets && item.maxSets <= 50)) &&
+            typeof item.phase === "string" && typeof item.note === "string"
+          )) throw new Error("メニューの保存データの形式が正しくありません。");
+          programs[lift] = saved.map(item => ({
+            ...item,
+            shortPhase: typeof item.shortPhase === "string" ? item.shortPhase : item.phase
+          }));
+        } catch (error) {
+          console.error(`${exerciseNames[lift]}のメニューを読み込めませんでした。`, error);
+          window.setTimeout(() => showToast(`${exerciseNames[lift]}の保存済みメニューを読み込めませんでした`), 0);
+          programs[lift] = JSON.parse(JSON.stringify(defaultPrograms[lift]));
+        }
+      });
+    }
+
+    function currentProgram() {
+      return programs[activeLift];
+    }
+
+    function loadEntries(lift) {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKeys[lift]) || "[]");
+        if (!Array.isArray(saved)) throw new Error("保存データの形式が正しくありません。");
+        return saved.filter(entry =>
+          entry && typeof entry.id === "string" && Number.isInteger(entry.week) &&
+          entry.week >= 1 && entry.week <= 10 && typeof entry.date === "string" &&
+          Number.isFinite(entry.weight) && Number.isFinite(entry.reps) &&
+          Number.isFinite(entry.sets) && typeof entry.note === "string"
+        );
+      } catch (error) {
+        console.error("トレーニング記録を読み込めませんでした。", error);
+        window.setTimeout(() => showToast("保存データを読み込めませんでした"), 0);
+        return [];
+      }
+    }
+
+    function saveEntries() {
+      try {
+        localStorage.setItem(storageKeys[activeLift], JSON.stringify(entries));
+        return true;
+      } catch (error) {
+        console.error("トレーニング記録を保存できませんでした。", error);
+        showToast("保存できませんでした。ブラウザーの空き容量を確認してください。");
+        return false;
+      }
+    }
+
+    function formatWeight(value) {
+      return Number.isInteger(value) ? String(value) : value.toFixed(1);
+    }
+
+    function weekEntries(week) {
+      return entries.filter(entry => entry.week === week).sort((a, b) => b.date.localeCompare(a.date));
+    }
+
+    function renderWeeks() {
+      const list = document.getElementById("week-list");
+      list.setAttribute("aria-label", `${exerciseNames[activeLift]}の10週間トレーニング計画`);
+      list.innerHTML = currentProgram().map(item => {
+        const done = weekEntries(item.week).length > 0;
+        const maxSets = item.maxSets || item.sets;
+        const targetSets = maxSets > item.sets ? `${item.sets}〜${maxSets}` : String(item.sets);
+        const minTotalReps = item.reps * item.sets;
+        const maxTotalReps = item.reps * maxSets;
+        const targetReps = maxTotalReps > minTotalReps ? `${minTotalReps}〜${maxTotalReps}` : String(minTotalReps);
+        const targetWeight = `${formatWeight(item.weight)}${item.week === 10 ? "〜" : ""}`;
+        return `<button class="week-card${selectedWeek === item.week ? " selected" : ""}${done ? " complete" : ""}" data-week="${item.week}" type="button" aria-pressed="${selectedWeek === item.week}">
+          <span class="week-number">${done ? "✓" : `W${String(item.week).padStart(2, "0")}`}</span>
+          <span><span class="week-title">第${item.week}週</span><span class="week-details">${item.reps} rep × ${targetSets} set ・ ${targetReps} rep</span><span class="phase-pill">${escapeHtml(item.shortPhase)}</span></span>
+          <span class="week-target"><span class="week-weight">${targetWeight} kg</span><span class="week-volume">目標重量</span></span>
+        </button>`;
+      }).join("");
+      list.querySelectorAll(".week-card").forEach(card => {
+        card.addEventListener("click", () => selectWeek(Number(card.dataset.week)));
+      });
+    }
+
+    function renderSummary() {
+      const completedWeeks = new Set(entries.map(entry => entry.week)).size;
+      const percent = completedWeeks * 10;
+      document.getElementById("progress-text").textContent = `${completedWeeks} / 10週`;
+      document.getElementById("progress-fill").style.width = `${percent}%`;
+      document.getElementById("progress-track").setAttribute("aria-valuenow", String(completedWeeks));
+      document.getElementById("stat-weeks").innerHTML = `${completedWeeks}<span class="stat-unit">/ 10週</span>`;
+      document.getElementById("stat-sessions").innerHTML = `${entries.length}<span class="stat-unit">回</span>`;
+      const next = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
+      document.getElementById("stat-next").innerHTML = `${next ? formatWeight(next.weight) : "完了"}<span class="stat-unit">${next ? "kg" : ""}</span>`;
+    }
+
+    function selectWeek(week) {
+      selectedWeek = week;
+      const item = currentProgram()[week - 1];
+      document.getElementById("form-title").textContent = `第${week}週の記録`;
+      const maxSets = item.maxSets || item.sets;
+      const targetSets = maxSets > item.sets ? `${item.sets}〜${maxSets}` : String(item.sets);
+      const targetWeight = `${formatWeight(item.weight)}${week === 10 ? "〜" : ""}`;
+      document.getElementById("target-line").textContent = `目標：${targetWeight} kg ・ ${item.reps} rep × ${targetSets} set`;
+      document.getElementById("phase-label").textContent = item.phase;
+      document.getElementById("coach-note").textContent = item.note;
+      document.getElementById("weight").value = item.weight;
+      document.getElementById("reps").value = item.reps;
+      document.getElementById("sets").value = item.sets;
+      document.getElementById("form-status").textContent = "";
+      renderWeeks();
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const records = weekEntries(selectedWeek);
+      document.getElementById("entry-count").textContent = `${records.length}件`;
+      const list = document.getElementById("history-list");
+      if (!records.length) {
+        list.innerHTML = '<div class="history-empty">まだ記録がありません。実施後に記録しましょう。</div>';
+        return;
+      }
+      list.innerHTML = records.map(entry => `<div class="entry">
+        <div class="entry-main"><div class="entry-date">${escapeHtml(entry.date)}</div>
+        <div class="entry-stats">${formatWeight(entry.weight)} kg ・ ${entry.reps} rep × ${entry.sets} set</div>
+        ${entry.note ? `<div class="entry-note">${escapeHtml(entry.note)}</div>` : ""}</div>
+        <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" aria-label="${escapeHtml(entry.date)}の記録を削除">×</button>
+      </div>`).join("");
+      list.querySelectorAll(".delete-entry").forEach(button => {
+        button.addEventListener("click", () => deleteEntry(button.dataset.id));
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timeout);
+      showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    document.querySelectorAll(".lift-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        activeLift = tab.dataset.lift;
+        entries = loadEntries(activeLift);
+        document.querySelectorAll(".lift-tab").forEach(button => {
+          button.setAttribute("aria-pressed", String(button.dataset.lift === activeLift));
+        });
+        loadPrograms();
+        document.getElementById("page-title").textContent = `${exerciseNames[activeLift]} 10週間プログラム`;
+        document.title = `Training Log — ${exerciseNames[activeLift]} 10週間プログラム`;
+        const firstIncomplete = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
+        selectWeek(firstIncomplete ? firstIncomplete.week : 1);
+        renderSummary();
+      });
+    });
+
+    function renderProgramEditor() {
+      document.getElementById("editor-title").textContent = `${exerciseNames[activeLift]} メニューを編集`;
+      document.getElementById("editor-list").innerHTML = currentProgram().map(item => `
+        <fieldset class="editor-week" data-week="${item.week}">
+          <legend class="editor-week-title">第${item.week}週</legend>
+          <div class="field"><label>重量（kg）</label><input type="number" name="weight" min="0" max="1000" step="0.5" value="${item.weight}" required></div>
+          <div class="field"><label>レップ数</label><input type="number" name="reps" min="1" max="100" step="1" value="${item.reps}" required></div>
+          <div class="field"><label>セット数（最小）</label><input type="number" name="sets" min="1" max="50" step="1" value="${item.sets}" required></div>
+          <div class="field"><label>セット数（最大）</label><input type="number" name="maxSets" min="1" max="50" step="1" value="${item.maxSets || item.sets}" required></div>
+          <div class="field"><label>フェーズ</label><input type="text" name="phase" maxlength="80" value="${escapeHtml(item.phase)}" required></div>
+          <div class="field note"><label>備考・体感目安</label><textarea name="note" maxlength="500">${escapeHtml(item.note)}</textarea></div>
+        </fieldset>
+      `).join("");
+    }
+
+    document.getElementById("edit-program-button").addEventListener("click", () => {
+      renderProgramEditor();
+      document.getElementById("program-dialog").showModal();
+    });
+    document.getElementById("close-editor-button").addEventListener("click", () => {
+      document.getElementById("program-dialog").close();
+    });
+    document.getElementById("cancel-editor-button").addEventListener("click", () => {
+      document.getElementById("program-dialog").close();
+    });
+    document.getElementById("program-editor-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const edited = [...document.querySelectorAll(".editor-week")].map(row => {
+        const value = name => row.querySelector(`[name="${name}"]`).value;
+        const phase = value("phase").trim();
+        return {
+          week: Number(row.dataset.week),
+          weight: Number(value("weight")),
+          reps: Number(value("reps")),
+          sets: Number(value("sets")),
+          maxSets: Number(value("maxSets")),
+          phase,
+          shortPhase: phase,
+          note: value("note").trim()
+        };
+      });
+      if (edited.some(item => item.maxSets < item.sets)) {
+        showToast("セット数の最大値は最小値以上にしてください。");
+        return;
+      }
+      try {
+        localStorage.setItem(planStorageKeys[activeLift], JSON.stringify(edited));
+      } catch (error) {
+        console.error("トレーニングメニューを保存できませんでした。", error);
+        showToast("メニューを保存できませんでした。ブラウザーの空き容量を確認してください。");
+        return;
+      }
+      programs[activeLift] = edited;
+      document.getElementById("program-dialog").close();
+      selectWeek(selectedWeek);
+      renderSummary();
+      showToast("メニューを保存しました");
+    });
+
+    document.getElementById("log-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const entry = {
+        id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        week: selectedWeek,
+        date: String(data.get("date")),
+        weight: Number(data.get("weight")),
+        reps: Number(data.get("reps")),
+        sets: Number(data.get("sets")),
+        note: String(data.get("note")).trim()
+      };
+      entries.push(entry);
+      if (!saveEntries()) {
+        entries.pop();
+        return;
+      }
+      document.getElementById("note").value = "";
+      document.getElementById("form-status").textContent = "記録を保存しました。";
+      renderWeeks();
+      renderSummary();
+      renderHistory();
+      showToast("トレーニングを記録しました");
+    });
+
+    function deleteEntry(id) {
+      const originalLength = entries.length;
+      entries = entries.filter(entry => entry.id !== id);
+      if (entries.length === originalLength) return;
+      if (!saveEntries()) {
+        entries = loadEntries();
+        renderWeeks();
+        renderSummary();
+        renderHistory();
+        return;
+      }
+      renderWeeks();
+      renderSummary();
+      renderHistory();
+      showToast("記録を削除しました");
+    }
+
+    document.getElementById("export-button").addEventListener("click", () => {
+      const rows = [["種目", "週", "日付", "重量(kg)", "レップ数", "セット数", "メモ"]];
+      entries.slice().sort((a, b) => a.week - b.week || a.date.localeCompare(b.date)).forEach(entry => {
+        rows.push([exerciseNames[activeLift], `第${entry.week}週`, entry.date, entry.weight, entry.reps, entry.sets, entry.note]);
+      });
+      const csv = "\uFEFF" + rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `training-log-${activeLift}.csv`;
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast("CSVを書き出しました");
+    });
+
+    const today = new Date();
+    const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    document.getElementById("session-date").value = localToday;
+    loadPrograms();
+    document.getElementById("page-title").textContent = `${exerciseNames[activeLift]} 10週間プログラム`;
+    document.title = `Training Log — ${exerciseNames[activeLift]} 10週間プログラム`;
+    const firstIncomplete = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
+    selectedWeek = firstIncomplete ? firstIncomplete.week : 1;
+    selectWeek(selectedWeek);
+    renderSummary();
+  </script>
+</body>
+</html>
