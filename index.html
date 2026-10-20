@@ -120,6 +120,27 @@
     .history { margin-top: 21px; padding-top: 17px; border-top: 1px solid var(--line); }
     .history-title { display: flex; justify-content: space-between; margin-bottom: 9px; font-size: 12px; font-weight: 750; }
     .history-empty { color: var(--muted); font-size: 11px; }
+    .set-list { display: grid; gap: 8px; }
+    .set-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) 36px; align-items: end; gap: 8px; padding: 9px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfa; }
+    .set-number { align-self: center; color: var(--muted); font-size: 11px; font-weight: 700; }
+    .set-field { display: grid; min-width: 0; gap: 4px; }
+    .set-field label { font-size: 10px; }
+    .set-field input { min-height: 38px; padding: 6px 8px; }
+    .remove-set { width: 36px; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--muted); font-size: 18px; }
+    .remove-set:hover:not(:disabled) { border-color: #d8b7ae; color: #b24f3c; }
+    .remove-set:disabled { opacity: .4; cursor: not-allowed; }
+    .set-actions { margin-top: 8px; }
+    .set-actions .button { min-height: 36px; }
+    .volume-section { margin: 0 0 30px; }
+    .volume-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .volume-card { min-width: 0; padding: 15px 16px 12px; }
+    .volume-title { margin: 0 0 8px; font-size: 13px; font-weight: 750; }
+    .volume-chart { display: block; width: 100%; height: auto; overflow: visible; }
+    .volume-chart text { fill: var(--muted); font-family: inherit; font-size: 10px; }
+    .volume-chart .grid-line { stroke: #e9ece5; stroke-width: 1; }
+    .volume-chart .bar { fill: #6f9470; }
+    .volume-chart .bar.has-volume { fill: var(--green); }
+    .volume-empty { margin: 0 0 9px; color: var(--muted); font-size: 11px; }
     .entry { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-top: 1px solid #f0f1ed; }
     .entry:first-of-type { border-top: 0; }
     .entry-main { min-width: 0; }
@@ -163,12 +184,20 @@
       .stats { gap: 8px; margin: 12px 0 23px; }
       .stat { padding: 12px 10px; }
       .stat-value { font-size: 19px; }
+      .section-head { align-items: start; }
+      .section-head .button { flex: none; padding: 0 10px; font-size: 11px; }
+      .volume-grid { grid-template-columns: 1fr; gap: 10px; }
+      .volume-card { padding: 12px 12px 8px; }
       .week-card { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 8px; padding: 12px 10px; }
       .week-number { width: 38px; height: 38px; }
       .week-target { min-width: 68px; }
       .week-weight { font-size: 12px; }
       .week-details { font-size: 10px; }
-      .form-panel { padding: 17px; }
+      .form-panel { padding: 15px 12px; }
+      .set-row { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr) 34px; gap: 6px; padding: 8px 6px; }
+      .remove-set { width: 34px; }
+      .save-row { position: sticky; bottom: 8px; z-index: 2; padding: 8px; border: 1px solid var(--line); border-radius: 11px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); }
+      .save-row .button { min-height: 46px; }
       .editor-header { padding: 17px 16px 12px; }
       .editor-list { max-height: calc(90vh - 155px); padding: 12px 16px; }
       .editor-week { grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
@@ -219,6 +248,13 @@
       <div class="stat"><div class="stat-label">次の目標重量</div><div class="stat-value" id="stat-next">95<span class="stat-unit">kg</span></div></div>
     </section>
 
+    <section class="volume-section" aria-labelledby="volume-heading">
+      <div class="section-head">
+        <div><h2 id="volume-heading">総ボリューム</h2><p class="section-hint">各週の実績（重量 × レップ数）の合計です。</p></div>
+      </div>
+      <div class="volume-grid" id="volume-charts"></div>
+    </section>
+
     <div class="section-head">
       <div><h2>プログラム</h2><p class="section-hint">週を選択して、トレーニングの実績を記録できます。</p></div>
       <button class="button" id="edit-program-button" type="button">メニューを編集</button>
@@ -234,9 +270,11 @@
         <form id="log-form">
           <div class="field-grid">
             <div class="field full"><label for="session-date">トレーニング日</label><input id="session-date" name="date" type="date" required></div>
-            <div class="field"><label for="weight">実施重量（kg）</label><input id="weight" name="weight" type="number" min="0" max="1000" step="0.5" required></div>
-            <div class="field"><label for="reps">実施レップ数</label><input id="reps" name="reps" type="number" min="1" max="100" step="1" required></div>
-            <div class="field"><label for="sets">実施セット数</label><input id="sets" name="sets" type="number" min="1" max="50" step="1" required></div>
+            <div class="field full">
+              <label>セットごとの実績</label>
+              <div class="set-list" id="set-list"></div>
+              <div class="set-actions"><button class="button" id="add-set-button" type="button">＋ セットを追加</button></div>
+            </div>
             <div class="field full"><label for="note">メモ・体感</label><textarea id="note" name="note" maxlength="500" placeholder="フォーム、調子、気づいたことなど"></textarea></div>
           </div>
           <div class="save-row"><button class="button primary" type="submit">＋ 記録を保存</button></div>
@@ -329,6 +367,26 @@
       return programs[activeLift];
     }
 
+    function isValidSetDetails(sets) {
+      return Array.isArray(sets) && sets.length >= 1 && sets.length <= 50 && sets.every(set =>
+        set && Number.isFinite(set.weight) && set.weight >= 0 && set.weight <= 1000 &&
+        Number.isInteger(set.reps) && set.reps >= 1 && set.reps <= 100
+      );
+    }
+
+    function entrySets(entry) {
+      if (isValidSetDetails(entry.setDetails)) return entry.setDetails;
+      return Array.from({ length: entry.sets }, () => ({ weight: entry.weight, reps: entry.reps }));
+    }
+
+    function entryVolume(entry) {
+      return entrySets(entry).reduce((total, set) => total + set.weight * set.reps, 0);
+    }
+
+    function formatSetDetails(entry) {
+      return entrySets(entry).map(set => `${formatWeight(set.weight)}kg×${set.reps}`).join(" / ");
+    }
+
     function loadEntries(lift) {
       try {
         const saved = JSON.parse(localStorage.getItem(storageKeys[lift]) || "[]");
@@ -337,7 +395,9 @@
           entry && typeof entry.id === "string" && Number.isInteger(entry.week) &&
           entry.week >= 1 && entry.week <= 10 && typeof entry.date === "string" &&
           Number.isFinite(entry.weight) && Number.isFinite(entry.reps) &&
-          Number.isFinite(entry.sets) && typeof entry.note === "string"
+          Number.isInteger(entry.sets) && entry.sets >= 1 && entry.sets <= 50 &&
+          typeof entry.note === "string" &&
+          (entry.setDetails === undefined || isValidSetDetails(entry.setDetails))
         );
       } catch (error) {
         console.error("トレーニング記録を読み込めませんでした。", error);
@@ -397,6 +457,79 @@
       document.getElementById("stat-sessions").innerHTML = `${entries.length}<span class="stat-unit">回</span>`;
       const next = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
       document.getElementById("stat-next").innerHTML = `${next ? formatWeight(next.weight) : "完了"}<span class="stat-unit">${next ? "kg" : ""}</span>`;
+      renderVolumeCharts();
+    }
+
+    function renderVolumeCharts() {
+      const otherLift = activeLift === "squat" ? "deadlift" : "squat";
+      const chartEntries = {
+        [activeLift]: entries,
+        [otherLift]: loadEntries(otherLift)
+      };
+      document.getElementById("volume-charts").innerHTML = ["squat", "deadlift"].map(lift => {
+        const weeklyVolumes = Array.from({ length: 10 }, (_, index) =>
+          chartEntries[lift].filter(entry => entry.week === index + 1)
+            .reduce((total, entry) => total + entryVolume(entry), 0)
+        );
+        const maxVolume = Math.max(...weeklyVolumes, 1);
+        const chartWidth = 420;
+        const chartHeight = 150;
+        const left = 42;
+        const top = 10;
+        const plotWidth = chartWidth - left - 8;
+        const plotHeight = 106;
+        const slotWidth = plotWidth / 10;
+        const barWidth = Math.min(20, slotWidth * .58);
+        const ticks = [0, .5, 1].map(ratio => {
+          const y = top + plotHeight * (1 - ratio);
+          const value = Math.round(maxVolume * ratio);
+          return `<line class="grid-line" x1="${left}" y1="${y}" x2="${chartWidth - 4}" y2="${y}"></line>
+            <text x="${left - 5}" y="${y + 3}" text-anchor="end">${value}</text>`;
+        }).join("");
+        const bars = weeklyVolumes.map((volume, index) => {
+          const height = volume ? Math.max(2, (volume / maxVolume) * plotHeight) : 0;
+          const x = left + slotWidth * index + (slotWidth - barWidth) / 2;
+          const y = top + plotHeight - height;
+          return `<rect class="bar${volume ? " has-volume" : ""}" x="${x}" y="${y}" width="${barWidth}" height="${height}" rx="3">
+            <title>第${index + 1}週：${Math.round(volume).toLocaleString("ja-JP")} kg</title>
+          </rect><text x="${x + barWidth / 2}" y="${top + plotHeight + 17}" text-anchor="middle">${index + 1}</text>`;
+        }).join("");
+        const hasVolume = weeklyVolumes.some(volume => volume > 0);
+        return `<article class="panel volume-card">
+          <h3 class="volume-title">${escapeHtml(exerciseNames[lift])}</h3>
+          ${hasVolume ? "" : '<p class="volume-empty">まだ記録がありません。トレーニングを記録するとグラフに表示されます。</p>'}
+          <svg class="volume-chart" viewBox="0 0 ${chartWidth} ${chartHeight}" role="img" aria-label="${escapeHtml(exerciseNames[lift])}の週ごとの総ボリューム（kg）">
+            ${ticks}${bars}
+            <text x="${left + plotWidth / 2}" y="${chartHeight - 2}" text-anchor="middle">週</text>
+          </svg>
+        </article>`;
+      }).join("");
+    }
+
+    function renderSetInputs(setDetails) {
+      const list = document.getElementById("set-list");
+      list.innerHTML = setDetails.map((set, index) => `
+        <div class="set-row">
+          <span class="set-number">#${index + 1}</span>
+          <div class="set-field">
+            <label for="set-weight-${index}">重量（kg）</label>
+            <input id="set-weight-${index}" name="set-weight" type="number" min="0" max="1000" step="0.5" value="${set.weight}" required>
+          </div>
+          <div class="set-field">
+            <label for="set-reps-${index}">レップ数</label>
+            <input id="set-reps-${index}" name="set-reps" type="number" min="1" max="100" step="1" value="${set.reps}" required>
+          </div>
+          <button class="remove-set" type="button" aria-label="${index + 1}セット目を削除"${setDetails.length === 1 ? " disabled" : ""}>×</button>
+        </div>
+      `).join("");
+      document.getElementById("add-set-button").disabled = setDetails.length >= 50;
+    }
+
+    function readSetInputs() {
+      return [...document.querySelectorAll(".set-row")].map(row => ({
+        weight: Number(row.querySelector('[name="set-weight"]').value),
+        reps: Number(row.querySelector('[name="set-reps"]').value)
+      }));
     }
 
     function selectWeek(week) {
@@ -409,13 +542,28 @@
       document.getElementById("target-line").textContent = `目標：${targetWeight} kg ・ ${item.reps} rep × ${targetSets} set`;
       document.getElementById("phase-label").textContent = item.phase;
       document.getElementById("coach-note").textContent = item.note;
-      document.getElementById("weight").value = item.weight;
-      document.getElementById("reps").value = item.reps;
-      document.getElementById("sets").value = item.sets;
+      renderSetInputs(Array.from({ length: item.sets }, () => ({ weight: item.weight, reps: item.reps })));
       document.getElementById("form-status").textContent = "";
       renderWeeks();
       renderHistory();
     }
+
+    document.getElementById("add-set-button").addEventListener("click", () => {
+      const setDetails = readSetInputs();
+      if (setDetails.length >= 50) return;
+      setDetails.push({ ...setDetails[setDetails.length - 1] });
+      renderSetInputs(setDetails);
+    });
+
+    document.getElementById("set-list").addEventListener("click", event => {
+      const button = event.target.closest(".remove-set");
+      if (!button || button.disabled) return;
+      const row = button.closest(".set-row");
+      const rows = [...document.querySelectorAll(".set-row")];
+      const setDetails = readSetInputs();
+      setDetails.splice(rows.indexOf(row), 1);
+      renderSetInputs(setDetails);
+    });
 
     function renderHistory() {
       const records = weekEntries(selectedWeek);
@@ -427,7 +575,8 @@
       }
       list.innerHTML = records.map(entry => `<div class="entry">
         <div class="entry-main"><div class="entry-date">${escapeHtml(entry.date)}</div>
-        <div class="entry-stats">${formatWeight(entry.weight)} kg ・ ${entry.reps} rep × ${entry.sets} set</div>
+        <div class="entry-stats">${escapeHtml(formatSetDetails(entry))}</div>
+        <div class="entry-stats">総ボリューム：${Math.round(entryVolume(entry)).toLocaleString("ja-JP")} kg</div>
         ${entry.note ? `<div class="entry-note">${escapeHtml(entry.note)}</div>` : ""}</div>
         <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" aria-label="${escapeHtml(entry.date)}の記録を削除">×</button>
       </div>`).join("");
@@ -532,13 +681,15 @@
       const form = event.currentTarget;
       if (!form.reportValidity()) return;
       const data = new FormData(form);
+      const setDetails = readSetInputs();
       const entry = {
         id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         week: selectedWeek,
         date: String(data.get("date")),
-        weight: Number(data.get("weight")),
-        reps: Number(data.get("reps")),
-        sets: Number(data.get("sets")),
+        weight: setDetails[0].weight,
+        reps: setDetails[0].reps,
+        sets: setDetails.length,
+        setDetails,
         note: String(data.get("note")).trim()
       };
       entries.push(entry);
@@ -572,9 +723,9 @@
     }
 
     document.getElementById("export-button").addEventListener("click", () => {
-      const rows = [["種目", "週", "日付", "重量(kg)", "レップ数", "セット数", "メモ"]];
+      const rows = [["種目", "週", "日付", "セット内訳", "総ボリューム(kg)", "メモ"]];
       entries.slice().sort((a, b) => a.week - b.week || a.date.localeCompare(b.date)).forEach(entry => {
-        rows.push([exerciseNames[activeLift], `第${entry.week}週`, entry.date, entry.weight, entry.reps, entry.sets, entry.note]);
+        rows.push([exerciseNames[activeLift], `第${entry.week}週`, entry.date, formatSetDetails(entry), entryVolume(entry), entry.note]);
       });
       const csv = "\uFEFF" + rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
