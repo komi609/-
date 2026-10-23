@@ -187,6 +187,15 @@
       .form-panel { position: static; }
       .hero-main { align-items: start; flex-direction: column; }
       .progress-box { width: 100%; }
+      .calendar-layout { grid-template-columns: 1fr; }
+      .calendar-grid { gap: 6px; }
+      .calendar-day {
+        min-height: 58px;
+        padding: 5px 4px;
+      }
+      .calendar-detail {
+        width: 100%;
+      }
     }
     @media (max-width: 560px) {
       .shell { padding: 17px 14px 38px; }
@@ -211,6 +220,10 @@
       .editor-week { grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
       .editor-week-title, .editor-week .field.note { grid-column: 1 / -1; }
       .editor-footer { padding: 10px 16px 15px; }
+      .calendar-day { min-height: 52px; }
+      .calendar-day .day-number { font-size: 11px; }
+      .calendar-day.has-entry .day-number { font-size: 10px; }
+      .calendar-detail { padding: 12px; }
     }
   </style>
 </head>
