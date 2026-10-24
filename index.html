@@ -120,6 +120,67 @@
     .history { margin-top: 21px; padding-top: 17px; border-top: 1px solid var(--line); }
     .history-title { display: flex; justify-content: space-between; margin-bottom: 9px; font-size: 12px; font-weight: 750; }
     .history-empty { color: var(--muted); font-size: 11px; }
+    .set-list { display: grid; gap: 8px; }
+    .set-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) 36px; align-items: end; gap: 8px; padding: 9px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfa; }
+    .set-number { align-self: center; color: var(--muted); font-size: 11px; font-weight: 700; }
+    .set-field { display: grid; min-width: 0; gap: 4px; }
+    .set-field label { font-size: 10px; }
+    .set-field input { min-height: 38px; padding: 6px 8px; }
+    .remove-set { width: 36px; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--muted); font-size: 18px; }
+    .remove-set:hover:not(:disabled) { border-color: #d8b7ae; color: #b24f3c; }
+    .remove-set:disabled { opacity: .4; cursor: not-allowed; }
+    .set-actions { margin-top: 8px; }
+    .set-actions .button { min-height: 36px; }
+    .volume-section { margin: 0 0 30px; }
+    .volume-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .volume-card { min-width: 0; padding: 15px 16px 12px; }
+    .volume-title { margin: 0 0 8px; font-size: 13px; font-weight: 750; }
+    .volume-chart { display: block; width: 100%; height: auto; overflow: visible; }
+    .volume-chart text { fill: var(--muted); font-family: inherit; font-size: 10px; }
+    .volume-chart .grid-line { stroke: #e9ece5; stroke-width: 1; }
+    .volume-chart .bar { fill: #6f9470; }
+    .volume-chart .bar.has-volume { fill: var(--green); }
+    .volume-empty { margin: 0 0 9px; color: var(--muted); font-size: 11px; }
+    .calendar-section { margin-bottom: 30px; }
+    .calendar-panel { padding: 17px; }
+    .calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .calendar-month { min-width: 125px; text-align: center; font-size: 15px; font-weight: 750; }
+    .calendar-nav { display: flex; gap: 7px; }
+    .calendar-nav .button { min-height: 34px; padding: 0 11px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+    .calendar-weekday { padding: 5px 0; color: var(--muted); font-size: 11px; font-weight: 700; text-align: center; }
+    .calendar-day {
+      display: flex; min-height: 76px; flex-direction: column; align-items: start; gap: 4px;
+      padding: 8px; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--ink); text-align: left;
+    }
+    .calendar-day:hover { border-color: #9eb795; background: #f8faf6; }
+    .calendar-day.today { border-color: #7b9b78; box-shadow: inset 0 0 0 1px #7b9b78; }
+    .calendar-day.has-log { background: #f1f6ef; }
+    .calendar-day-number { font-size: 12px; font-weight: 750; }
+    .calendar-day-exercises { color: var(--green-dark); font-size: 10px; font-weight: 700; line-height: 1.35; }
+    .calendar-day-count { color: var(--muted); font-size: 9px; }
+    .calendar-dialog { width: min(560px, calc(100% - 28px)); max-width: 560px; max-height: 90vh; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 80px rgba(20, 30, 20, .24); }
+    .calendar-dialog::backdrop { background: rgba(25, 34, 26, .48); backdrop-filter: blur(2px); }
+    .calendar-dialog-header { display: flex; align-items: start; justify-content: space-between; gap: 16px; padding: 18px 20px 13px; border-bottom: 1px solid var(--line); }
+    .calendar-dialog-header h2 { font-size: 17px; }
+    .calendar-dialog-body { max-height: calc(90vh - 130px); padding: 15px 20px; overflow-y: auto; }
+    .calendar-log-list { display: grid; gap: 8px; }
+    .calendar-log { display: flex; align-items: start; justify-content: space-between; gap: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: #f8faf6; }
+    .calendar-log-main { min-width: 0; }
+    .calendar-log-exercise { font-weight: 750; }
+    .calendar-log-details, .calendar-log-note { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .calendar-entry-form { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .calendar-entry-form h3 { margin: 0 0 10px; font-size: 13px; }
+    .calendar-exercise-list { display: grid; gap: 8px; }
+    .calendar-exercise-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr 34px; align-items: end; gap: 7px; }
+    .calendar-exercise-row .field { min-width: 0; }
+    .calendar-exercise-row input, .calendar-exercise-row select { min-height: 38px; padding: 6px 8px; }
+    .calendar-exercise-row select { width: 100%; border: 1px solid #dfe2da; border-radius: 8px; background: white; color: var(--ink); font: inherit; }
+    .calendar-exercise-row .remove-set { width: 34px; }
+    .calendar-note-field { margin-top: 10px; }
+    .calendar-dialog-actions { display: flex; align-items: center; gap: 9px; margin-top: 12px; }
+    .calendar-dialog-actions .button.primary { flex: 1; }
+    .calendar-empty { color: var(--muted); font-size: 11px; }
     .entry { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-top: 1px solid #f0f1ed; }
     .entry:first-of-type { border-top: 0; }
     .entry-main { min-width: 0; }
@@ -143,43 +204,6 @@
     .editor-week textarea { min-height: 52px; }
     .editor-footer { display: flex; justify-content: end; gap: 9px; padding: 12px 22px 18px; border-top: 1px solid var(--line); background: white; }
     .footer-note { margin-top: 19px; color: var(--muted); font-size: 11px; text-align: center; }
-    .calendar-section { margin-top: 22px; padding: 18px 18px 14px; }
-    .calendar-header { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
-    .calendar-nav { display: flex; align-items: center; gap: 8px; }
-    .calendar-month { min-width: 138px; text-align: center; font-size: 13px; font-weight: 760; }
-    .calendar-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(210px, .8fr); gap: 16px; }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(36px, 1fr)); gap: 8px; }
-    .day-name { padding: 4px 0 8px; color: var(--muted); font-size: 11px; font-weight: 700; text-align: center; }
-    .calendar-day {
-      position: relative; display: flex; align-items: center; justify-content: center; min-height: 72px;
-      padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: #fafaf7; color: var(--ink);
-      font-size: 12px; font-weight: 650; transition: .15s ease;
-    }
-    .calendar-day:hover { background: #f3f5f0; }
-    .calendar-day.muted { color: #a3a8a0; background: #fbfbf9; }
-    .calendar-day.has-entry { border-color: #bfd4ba; background: #f4faf2; }
-    .calendar-day.selected { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); background: #edf5ec; }
-    .day-number { position: relative; z-index: 1; }
-    .calendar-day.has-entry .day-number { color: var(--green-dark); }
-    .calendar-day .dot {
-      position: absolute; right: 10px; bottom: 9px; width: 7px; height: 7px; border-radius: 999px; background: var(--orange);
-      box-shadow: 0 0 0 2px rgba(217, 120, 72, .18);
-    }
-    .calendar-detail {
-      padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fafcf9;
-    }
-    .detail-title { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-    .detail-date { margin: 6px 0 12px; font-size: 18px; font-weight: 780; letter-spacing: -.03em; }
-    .calendar-entry-list { display: grid; gap: 10px; }
-    .calendar-entry {
-      padding: 10px 11px; border: 1px solid #ebefe7; border-radius: 10px; background: white;
-    }
-    .calendar-entry-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .calendar-badge { display: inline-block; padding: 3px 7px; border-radius: 999px; background: var(--green-pale); color: var(--green-dark); font-size: 10px; font-weight: 700; }
-    .calendar-kilo { font-size: 16px; font-weight: 780; }
-    .calendar-entry-meta { margin-top: 5px; color: var(--muted); font-size: 11px; }
-    .calendar-entry-note { margin-top: 6px; color: #4c574d; font-size: 11px; }
-    .empty-detail { color: var(--muted); font-size: 12px; }
     .toast { position: fixed; right: 22px; bottom: 22px; z-index: 3; padding: 11px 15px; border-radius: 9px; background: #263b2c; color: white; box-shadow: var(--shadow); font-size: 12px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s; }
     .toast.show { opacity: 1; transform: translateY(0); }
     @media (max-width: 800px) {
@@ -187,15 +211,6 @@
       .form-panel { position: static; }
       .hero-main { align-items: start; flex-direction: column; }
       .progress-box { width: 100%; }
-      .calendar-layout { grid-template-columns: 1fr; }
-      .calendar-grid { gap: 6px; }
-      .calendar-day {
-        min-height: 58px;
-        padding: 5px 4px;
-      }
-      .calendar-detail {
-        width: 100%;
-      }
     }
     @media (max-width: 560px) {
       .shell { padding: 17px 14px 38px; }
@@ -209,21 +224,32 @@
       .stats { gap: 8px; margin: 12px 0 23px; }
       .stat { padding: 12px 10px; }
       .stat-value { font-size: 19px; }
+      .section-head { align-items: start; }
+      .section-head .button { flex: none; padding: 0 10px; font-size: 11px; }
+      .volume-grid { grid-template-columns: 1fr; gap: 10px; }
+      .volume-card { padding: 12px 12px 8px; }
+      .calendar-panel { padding: 11px; }
+      .calendar-grid { gap: 3px; }
+      .calendar-day { min-height: 64px; padding: 6px 4px; }
+      .calendar-day-exercises { font-size: 9px; }
+      .calendar-exercise-row { grid-template-columns: 1fr 1fr 1fr 30px; gap: 5px; }
+      .calendar-exercise-row label { font-size: 10px; }
+      .calendar-dialog-header, .calendar-dialog-body { padding-right: 14px; padding-left: 14px; }
       .week-card { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 8px; padding: 12px 10px; }
       .week-number { width: 38px; height: 38px; }
       .week-target { min-width: 68px; }
       .week-weight { font-size: 12px; }
       .week-details { font-size: 10px; }
-      .form-panel { padding: 17px; }
+      .form-panel { padding: 15px 12px; }
+      .set-row { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr) 34px; gap: 6px; padding: 8px 6px; }
+      .remove-set { width: 34px; }
+      .save-row { position: sticky; bottom: 8px; z-index: 2; padding: 8px; border: 1px solid var(--line); border-radius: 11px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); }
+      .save-row .button { min-height: 46px; }
       .editor-header { padding: 17px 16px 12px; }
       .editor-list { max-height: calc(90vh - 155px); padding: 12px 16px; }
       .editor-week { grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
       .editor-week-title, .editor-week .field.note { grid-column: 1 / -1; }
       .editor-footer { padding: 10px 16px 15px; }
-      .calendar-day { min-height: 52px; }
-      .calendar-day .day-number { font-size: 11px; }
-      .calendar-day.has-entry .day-number { font-size: 10px; }
-      .calendar-detail { padding: 12px; }
     }
   </style>
 </head>
@@ -269,6 +295,29 @@
       <div class="stat"><div class="stat-label">次の目標重量</div><div class="stat-value" id="stat-next">95<span class="stat-unit">kg</span></div></div>
     </section>
 
+    <section class="calendar-section" aria-labelledby="calendar-title">
+      <div class="section-head">
+        <div><h2 id="calendar-title">トレーニングカレンダー</h2><p class="section-hint">日付を押して、BP・SW・DR・RPの記録を追加できます。</p></div>
+      </div>
+      <div class="panel calendar-panel">
+        <div class="calendar-heading">
+          <div class="calendar-month" id="calendar-month" aria-live="polite"></div>
+          <div class="calendar-nav">
+            <button class="button" id="calendar-prev" type="button" aria-label="前の月">‹</button>
+            <button class="button" id="calendar-next" type="button" aria-label="次の月">›</button>
+          </div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="トレーニングカレンダー"></div>
+      </div>
+    </section>
+
+    <section class="volume-section" aria-labelledby="volume-heading">
+      <div class="section-head">
+        <div><h2 id="volume-heading">総ボリューム</h2><p class="section-hint">各週の実績（重量 × レップ数）の合計です。</p></div>
+      </div>
+      <div class="volume-grid" id="volume-charts"></div>
+    </section>
+
     <div class="section-head">
       <div><h2>プログラム</h2><p class="section-hint">週を選択して、トレーニングの実績を記録できます。</p></div>
       <button class="button" id="edit-program-button" type="button">メニューを編集</button>
@@ -284,9 +333,11 @@
         <form id="log-form">
           <div class="field-grid">
             <div class="field full"><label for="session-date">トレーニング日</label><input id="session-date" name="date" type="date" required></div>
-            <div class="field"><label for="weight">実施重量（kg）</label><input id="weight" name="weight" type="number" min="0" max="1000" step="0.5" required></div>
-            <div class="field"><label for="reps">実施レップ数</label><input id="reps" name="reps" type="number" min="1" max="100" step="1" required></div>
-            <div class="field"><label for="sets">実施セット数</label><input id="sets" name="sets" type="number" min="1" max="50" step="1" required></div>
+            <div class="field full">
+              <label>セットごとの実績</label>
+              <div class="set-list" id="set-list"></div>
+              <div class="set-actions"><button class="button" id="add-set-button" type="button">＋ セットを追加</button></div>
+            </div>
             <div class="field full"><label for="note">メモ・体感</label><textarea id="note" name="note" maxlength="500" placeholder="フォーム、調子、気づいたことなど"></textarea></div>
           </div>
           <div class="save-row"><button class="button primary" type="submit">＋ 記録を保存</button></div>
@@ -298,28 +349,6 @@
         </div>
       </section>
     </section>
-
-    <section class="panel calendar-section" aria-labelledby="calendar-heading">
-      <div class="calendar-header">
-        <div>
-          <h2 id="calendar-heading">記録カレンダー</h2>
-        </div>
-        <div class="calendar-nav">
-          <button class="button" id="prev-month" type="button" aria-label="前の月">←</button>
-          <div class="calendar-month" id="calendar-month-label">2026年10月</div>
-          <button class="button" id="next-month" type="button" aria-label="次の月">→</button>
-        </div>
-      </div>
-      <div class="calendar-layout">
-        <div class="calendar-grid" id="calendar-grid" aria-live="polite"></div>
-        <aside class="calendar-detail" id="calendar-detail">
-          <div class="detail-title">選択中の日</div>
-          <div class="detail-date" id="calendar-date-label">--</div>
-          <div id="calendar-entry-list" class="calendar-entry-list"></div>
-        </aside>
-      </div>
-    </section>
-
     <p class="footer-note">記録はこのブラウザー内に保存されます。別の端末やブラウザーとは同期されません。</p>
   </main>
   <dialog class="program-dialog" id="program-dialog" aria-labelledby="editor-title">
@@ -334,6 +363,25 @@
         <button class="button primary" type="submit">メニューを保存</button>
       </div>
     </form>
+  </dialog>
+  <dialog class="calendar-dialog" id="calendar-dialog" aria-labelledby="calendar-dialog-title">
+    <div class="calendar-dialog-header">
+      <div><h2 id="calendar-dialog-title"></h2><div class="target-line">種目ごとの重量・レップ数・メモを記録できます。</div></div>
+      <button class="editor-close" id="close-calendar-button" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="calendar-dialog-body">
+      <div class="calendar-log-list" id="calendar-log-list"></div>
+      <form class="calendar-entry-form" id="calendar-entry-form">
+        <h3>種目を追加</h3>
+        <div class="calendar-exercise-list" id="calendar-exercise-list"></div>
+        <div class="set-actions"><button class="button" id="add-calendar-exercise" type="button">＋ 種目を追加</button></div>
+        <div class="field calendar-note-field"><label for="calendar-note">メモ</label><textarea id="calendar-note" name="note" maxlength="500" placeholder="補足、調子、気づいたことなど"></textarea></div>
+        <div class="calendar-dialog-actions">
+          <button class="button primary" type="submit">記録を保存</button>
+        </div>
+        <div class="status" id="calendar-status" role="status"></div>
+      </form>
+    </div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
 
@@ -368,9 +416,15 @@
     const exerciseNames = { squat: "スクワット（SW）", deadlift: "デッドリフト（DR）" };
     const storageKeys = { squat: "training-log-10-week-v1", deadlift: "training-log-deadlift-10-week-v1" };
     const planStorageKeys = { squat: "training-plan-squat-v1", deadlift: "training-plan-deadlift-v1" };
+    const calendarStorageKey = "training-log-calendar-v1";
+    const calendarExercises = ["BP", "SW", "DR", "RP"];
     let activeLift = "squat";
     let selectedWeek = 1;
     let entries = loadEntries(activeLift);
+    let calendarLogs = loadCalendarLogs();
+    const calendarToday = new Date();
+    let calendarMonth = new Date(calendarToday.getFullYear(), calendarToday.getMonth(), 1);
+    let selectedCalendarDate = "";
 
     function loadPrograms() {
       Object.keys(programs).forEach(lift => {
@@ -401,6 +455,26 @@
       return programs[activeLift];
     }
 
+    function isValidSetDetails(sets) {
+      return Array.isArray(sets) && sets.length >= 1 && sets.length <= 50 && sets.every(set =>
+        set && Number.isFinite(set.weight) && set.weight >= 0 && set.weight <= 1000 &&
+        Number.isInteger(set.reps) && set.reps >= 1 && set.reps <= 100
+      );
+    }
+
+    function entrySets(entry) {
+      if (isValidSetDetails(entry.setDetails)) return entry.setDetails;
+      return Array.from({ length: entry.sets }, () => ({ weight: entry.weight, reps: entry.reps }));
+    }
+
+    function entryVolume(entry) {
+      return entrySets(entry).reduce((total, set) => total + set.weight * set.reps, 0);
+    }
+
+    function formatSetDetails(entry) {
+      return entrySets(entry).map(set => `${formatWeight(set.weight)}kg×${set.reps}`).join(" / ");
+    }
+
     function loadEntries(lift) {
       try {
         const saved = JSON.parse(localStorage.getItem(storageKeys[lift]) || "[]");
@@ -409,12 +483,49 @@
           entry && typeof entry.id === "string" && Number.isInteger(entry.week) &&
           entry.week >= 1 && entry.week <= 10 && typeof entry.date === "string" &&
           Number.isFinite(entry.weight) && Number.isFinite(entry.reps) &&
-          Number.isFinite(entry.sets) && typeof entry.note === "string"
+          Number.isInteger(entry.sets) && entry.sets >= 1 && entry.sets <= 50 &&
+          typeof entry.note === "string" &&
+          (entry.setDetails === undefined || isValidSetDetails(entry.setDetails))
         );
       } catch (error) {
         console.error("トレーニング記録を読み込めませんでした。", error);
         window.setTimeout(() => showToast("保存データを読み込めませんでした"), 0);
         return [];
+      }
+    }
+
+    function isValidDateString(value) {
+      if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+      const [year, month, day] = value.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
+      return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+    }
+
+    function loadCalendarLogs() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(calendarStorageKey) || "[]");
+        if (!Array.isArray(saved)) throw new Error("カレンダー記録の形式が正しくありません。");
+        return saved.filter(entry =>
+          entry && typeof entry.id === "string" && isValidDateString(entry.date) &&
+          calendarExercises.includes(entry.exercise) && Number.isFinite(entry.weight) &&
+          entry.weight >= 0 && entry.weight <= 1000 && Number.isInteger(entry.reps) &&
+          entry.reps >= 1 && entry.reps <= 100 && typeof entry.note === "string"
+        );
+      } catch (error) {
+        console.error("カレンダー記録を読み込めませんでした。", error);
+        window.setTimeout(() => showToast("カレンダーの保存データを読み込めませんでした"), 0);
+        return [];
+      }
+    }
+
+    function saveCalendarLogs() {
+      try {
+        localStorage.setItem(calendarStorageKey, JSON.stringify(calendarLogs));
+        return true;
+      } catch (error) {
+        console.error("カレンダー記録を保存できませんでした。", error);
+        showToast("保存できませんでした。ブラウザーの空き容量を確認してください。");
+        return false;
       }
     }
 
@@ -431,6 +542,98 @@
 
     function formatWeight(value) {
       return Number.isInteger(value) ? String(value) : value.toFixed(1);
+    }
+
+    function formatDateKey(year, monthIndex, day) {
+      return `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+
+    function renderCalendar() {
+      const year = calendarMonth.getFullYear();
+      const monthIndex = calendarMonth.getMonth();
+      const monthStart = new Date(year, monthIndex, 1);
+      const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+      const todayKey = formatDateKey(calendarToday.getFullYear(), calendarToday.getMonth(), calendarToday.getDate());
+      document.getElementById("calendar-month").textContent = new Intl.DateTimeFormat("ja-JP", {
+        year: "numeric",
+        month: "long"
+      }).format(monthStart);
+      const weekdays = ["日", "月", "火", "水", "木", "金", "土"]
+        .map(day => `<div class="calendar-weekday" role="columnheader">${day}</div>`).join("");
+      const blanks = Array.from({ length: monthStart.getDay() }, () => '<span aria-hidden="true"></span>').join("");
+      const days = Array.from({ length: daysInMonth }, (_, index) => {
+        const day = index + 1;
+        const date = formatDateKey(year, monthIndex, day);
+        const dayLogs = calendarLogs.filter(entry => entry.date === date);
+        const exercises = [...new Set(dayLogs.map(entry => entry.exercise))].join("・");
+        const classes = ["calendar-day", date === todayKey ? "today" : "", dayLogs.length ? "has-log" : ""].filter(Boolean).join(" ");
+        const summary = dayLogs.length
+          ? `<span class="calendar-day-exercises">${escapeHtml(exercises)}</span><span class="calendar-day-count">${dayLogs.length}件</span>`
+          : "";
+        return `<button class="${classes}" type="button" role="gridcell" data-date="${date}" aria-label="${year}年${monthIndex + 1}月${day}日${dayLogs.length ? `、${exercises} ${dayLogs.length}件の記録` : ""}">
+          <span class="calendar-day-number">${day}</span>${summary}
+        </button>`;
+      }).join("");
+      document.getElementById("calendar-grid").innerHTML = weekdays + blanks + days;
+    }
+
+    function renderCalendarExerciseRows(rows) {
+      document.getElementById("calendar-exercise-list").innerHTML = rows.map((row, index) => `
+        <div class="calendar-exercise-row">
+          <div class="field">
+            <label for="calendar-exercise-${index}">種目</label>
+            <select id="calendar-exercise-${index}" name="exercise" required>
+              ${calendarExercises.map(exercise => `<option value="${exercise}"${row.exercise === exercise ? " selected" : ""}>${exercise}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field">
+            <label for="calendar-weight-${index}">重量（kg）</label>
+            <input id="calendar-weight-${index}" name="weight" type="number" min="0" max="1000" step="0.5" value="${escapeHtml(row.weight)}" required>
+          </div>
+          <div class="field">
+            <label for="calendar-reps-${index}">rep</label>
+            <input id="calendar-reps-${index}" name="reps" type="number" min="1" max="100" step="1" value="${escapeHtml(row.reps)}" required>
+          </div>
+          <button class="remove-set" type="button" aria-label="${index + 1}種目目を削除"${rows.length === 1 ? " disabled" : ""}>×</button>
+        </div>
+      `).join("");
+      document.getElementById("add-calendar-exercise").disabled = rows.length >= 20;
+    }
+
+    function readCalendarExerciseRows() {
+      return [...document.querySelectorAll(".calendar-exercise-row")].map(row => ({
+        exercise: row.querySelector('[name="exercise"]').value,
+        weight: row.querySelector('[name="weight"]').value,
+        reps: row.querySelector('[name="reps"]').value
+      }));
+    }
+
+    function renderCalendarLogs() {
+      const list = document.getElementById("calendar-log-list");
+      const dayLogs = calendarLogs.filter(entry => entry.date === selectedCalendarDate);
+      if (!dayLogs.length) {
+        list.innerHTML = '<div class="calendar-empty">この日の記録はまだありません。</div>';
+        return;
+      }
+      list.innerHTML = dayLogs.map(entry => `<div class="calendar-log">
+        <div class="calendar-log-main">
+          <div class="calendar-log-exercise">${escapeHtml(entry.exercise)}</div>
+          <div class="calendar-log-details">${formatWeight(entry.weight)}kg × ${entry.reps} rep</div>
+          ${entry.note ? `<div class="calendar-log-note">${escapeHtml(entry.note)}</div>` : ""}
+        </div>
+        <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" aria-label="${escapeHtml(entry.exercise)}の記録を削除">×</button>
+      </div>`).join("");
+    }
+
+    function openCalendarDate(date) {
+      selectedCalendarDate = date;
+      const [year, month, day] = date.split("-").map(Number);
+      document.getElementById("calendar-dialog-title").textContent = `${year}年${month}月${day}日の記録`;
+      document.getElementById("calendar-note").value = "";
+      document.getElementById("calendar-status").textContent = "";
+      renderCalendarLogs();
+      renderCalendarExerciseRows([{ exercise: "BP", weight: "", reps: "" }]);
+      document.getElementById("calendar-dialog").showModal();
     }
 
     function weekEntries(week) {
@@ -469,108 +672,79 @@
       document.getElementById("stat-sessions").innerHTML = `${entries.length}<span class="stat-unit">回</span>`;
       const next = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
       document.getElementById("stat-next").innerHTML = `${next ? formatWeight(next.weight) : "完了"}<span class="stat-unit">${next ? "kg" : ""}</span>`;
+      renderVolumeCharts();
     }
 
-    let calendarMonth = new Date();
-    let calendarSelectedDate = null;
-
-    function toISODate(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    }
-
-    function getCalendarEntriesByDate() {
-      const dateMap = new Map();
-      ["squat", "deadlift"].forEach(lift => {
-        loadEntries(lift).forEach(entry => {
-          const isoDate = entry.date;
-          if (!dateMap.has(isoDate)) dateMap.set(isoDate, []);
-          dateMap.get(isoDate).push({ ...entry, lift });
-        });
-      });
-      return dateMap;
-    }
-
-    function renderCalendar() {
-      const label = document.getElementById("calendar-month-label");
-      const grid = document.getElementById("calendar-grid");
-      label.textContent = `${calendarMonth.getFullYear()}年${calendarMonth.getMonth() + 1}月`;
-
-      const dateMap = getCalendarEntriesByDate();
-
-      const dayNames = ["月", "火", "水", "木", "金", "土", "日"];
-      grid.innerHTML = dayNames.map(day => `<div class="day-name">${day}</div>`).join("") + Array.from({ length: 42 }, (_, index) => {
-        const monthStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
-        const startOffset = (monthStart.getDay() + 6) % 7;
-        const cellDate = new Date(monthStart);
-        cellDate.setDate(monthStart.getDate() - startOffset + index);
-        const isoDate = toISODate(cellDate);
-        const isCurrentMonth = cellDate.getMonth() === calendarMonth.getMonth();
-        const entriesOnDate = dateMap.get(isoDate) || [];
-        const marker = entriesOnDate.some(entry => entry.lift === "squat") && entriesOnDate.some(entry => entry.lift === "deadlift")
-          ? "SD"
-          : entriesOnDate.some(entry => entry.lift === "squat")
-            ? "S"
-            : entriesOnDate.some(entry => entry.lift === "deadlift")
-              ? "D"
-              : "";
-        const hasEntry = !!marker;
-        const isSelected = calendarSelectedDate === isoDate;
-        return `<button class="calendar-day ${isCurrentMonth ? "" : "muted"} ${hasEntry ? "has-entry" : ""} ${isSelected ? "selected" : ""}" type="button" data-date="${isoDate}" aria-label="${isoDate}の記録${hasEntry ? `: ${marker}` : ""}">
-          <span class="day-number">${hasEntry ? marker : cellDate.getDate()}</span>
-          ${hasEntry ? '<span class="dot" aria-hidden="true"></span>' : ""}
-        </button>`;
+    function renderVolumeCharts() {
+      const otherLift = activeLift === "squat" ? "deadlift" : "squat";
+      const chartEntries = {
+        [activeLift]: entries,
+        [otherLift]: loadEntries(otherLift)
+      };
+      document.getElementById("volume-charts").innerHTML = ["squat", "deadlift"].map(lift => {
+        const weeklyVolumes = Array.from({ length: 10 }, (_, index) =>
+          chartEntries[lift].filter(entry => entry.week === index + 1)
+            .reduce((total, entry) => total + entryVolume(entry), 0)
+        );
+        const maxVolume = Math.max(...weeklyVolumes, 1);
+        const chartWidth = 420;
+        const chartHeight = 150;
+        const left = 42;
+        const top = 10;
+        const plotWidth = chartWidth - left - 8;
+        const plotHeight = 106;
+        const slotWidth = plotWidth / 10;
+        const barWidth = Math.min(20, slotWidth * .58);
+        const ticks = [0, .5, 1].map(ratio => {
+          const y = top + plotHeight * (1 - ratio);
+          const value = Math.round(maxVolume * ratio);
+          return `<line class="grid-line" x1="${left}" y1="${y}" x2="${chartWidth - 4}" y2="${y}"></line>
+            <text x="${left - 5}" y="${y + 3}" text-anchor="end">${value}</text>`;
+        }).join("");
+        const bars = weeklyVolumes.map((volume, index) => {
+          const height = volume ? Math.max(2, (volume / maxVolume) * plotHeight) : 0;
+          const x = left + slotWidth * index + (slotWidth - barWidth) / 2;
+          const y = top + plotHeight - height;
+          return `<rect class="bar${volume ? " has-volume" : ""}" x="${x}" y="${y}" width="${barWidth}" height="${height}" rx="3">
+            <title>第${index + 1}週：${Math.round(volume).toLocaleString("ja-JP")} kg</title>
+          </rect><text x="${x + barWidth / 2}" y="${top + plotHeight + 17}" text-anchor="middle">${index + 1}</text>`;
+        }).join("");
+        const hasVolume = weeklyVolumes.some(volume => volume > 0);
+        return `<article class="panel volume-card">
+          <h3 class="volume-title">${escapeHtml(exerciseNames[lift])}</h3>
+          ${hasVolume ? "" : '<p class="volume-empty">まだ記録がありません。トレーニングを記録するとグラフに表示されます。</p>'}
+          <svg class="volume-chart" viewBox="0 0 ${chartWidth} ${chartHeight}" role="img" aria-label="${escapeHtml(exerciseNames[lift])}の週ごとの総ボリューム（kg）">
+            ${ticks}${bars}
+            <text x="${left + plotWidth / 2}" y="${chartHeight - 2}" text-anchor="middle">週</text>
+          </svg>
+        </article>`;
       }).join("");
-
-      if (!calendarSelectedDate || !dateMap.has(calendarSelectedDate)) {
-        const currentDays = Array.from(dateMap.keys()).sort();
-        const target = currentDays.find(date => {
-          const value = new Date(`${date}T00:00:00`);
-          return value.getFullYear() === calendarMonth.getFullYear() && value.getMonth() === calendarMonth.getMonth();
-        }) || currentDays[0] || toISODate(new Date());
-        calendarSelectedDate = target;
-      }
-
-      renderCalendarDetail();
-      grid.querySelectorAll(".calendar-day").forEach(button => {
-        button.addEventListener("click", () => {
-          calendarSelectedDate = button.dataset.date;
-          renderCalendar();
-        });
-      });
     }
 
-    function renderCalendarDetail() {
-      const detailDate = document.getElementById("calendar-date-label");
-      const list = document.getElementById("calendar-entry-list");
-      if (!calendarSelectedDate) {
-        detailDate.textContent = "記録なし";
-        list.innerHTML = '<div class="empty-detail">この月には記録がありません。</div>';
-        return;
-      }
-
-      const dateValue = new Date(`${calendarSelectedDate}T00:00:00`);
-      const dateMap = getCalendarEntriesByDate();
-      const dayEntries = (dateMap.get(calendarSelectedDate) || []).sort((a, b) => a.date.localeCompare(b.date));
-      detailDate.textContent = `${dateValue.getFullYear()}年${dateValue.getMonth() + 1}月${dateValue.getDate()}日`;
-
-      if (!dayEntries.length) {
-        list.innerHTML = '<div class="empty-detail">この日には記録がありません。</div>';
-        return;
-      }
-
-      list.innerHTML = dayEntries.map(entry => `
-        <div class="calendar-entry">
-          <div class="calendar-entry-top">
-            <span class="calendar-badge">${entry.lift === "squat" ? "SW" : "DR"} ・ 第${entry.week}週</span>
-            <span class="calendar-kilo">${formatWeight(entry.weight)}kg</span>
+    function renderSetInputs(setDetails) {
+      const list = document.getElementById("set-list");
+      list.innerHTML = setDetails.map((set, index) => `
+        <div class="set-row">
+          <span class="set-number">#${index + 1}</span>
+          <div class="set-field">
+            <label for="set-weight-${index}">重量（kg）</label>
+            <input id="set-weight-${index}" name="set-weight" type="number" min="0" max="1000" step="0.5" value="${set.weight}" required>
           </div>
-          <div class="calendar-entry-meta">${entry.reps} rep × ${entry.sets} set</div>
-          ${entry.note ? `<div class="calendar-entry-note">${escapeHtml(entry.note)}</div>` : ""}
+          <div class="set-field">
+            <label for="set-reps-${index}">レップ数</label>
+            <input id="set-reps-${index}" name="set-reps" type="number" min="1" max="100" step="1" value="${set.reps}" required>
+          </div>
+          <button class="remove-set" type="button" aria-label="${index + 1}セット目を削除"${setDetails.length === 1 ? " disabled" : ""}>×</button>
         </div>
       `).join("");
+      document.getElementById("add-set-button").disabled = setDetails.length >= 50;
+    }
+
+    function readSetInputs() {
+      return [...document.querySelectorAll(".set-row")].map(row => ({
+        weight: Number(row.querySelector('[name="set-weight"]').value),
+        reps: Number(row.querySelector('[name="set-reps"]').value)
+      }));
     }
 
     function selectWeek(week) {
@@ -583,13 +757,28 @@
       document.getElementById("target-line").textContent = `目標：${targetWeight} kg ・ ${item.reps} rep × ${targetSets} set`;
       document.getElementById("phase-label").textContent = item.phase;
       document.getElementById("coach-note").textContent = item.note;
-      document.getElementById("weight").value = item.weight;
-      document.getElementById("reps").value = item.reps;
-      document.getElementById("sets").value = item.sets;
+      renderSetInputs(Array.from({ length: item.sets }, () => ({ weight: item.weight, reps: item.reps })));
       document.getElementById("form-status").textContent = "";
       renderWeeks();
       renderHistory();
     }
+
+    document.getElementById("add-set-button").addEventListener("click", () => {
+      const setDetails = readSetInputs();
+      if (setDetails.length >= 50) return;
+      setDetails.push({ ...setDetails[setDetails.length - 1] });
+      renderSetInputs(setDetails);
+    });
+
+    document.getElementById("set-list").addEventListener("click", event => {
+      const button = event.target.closest(".remove-set");
+      if (!button || button.disabled) return;
+      const row = button.closest(".set-row");
+      const rows = [...document.querySelectorAll(".set-row")];
+      const setDetails = readSetInputs();
+      setDetails.splice(rows.indexOf(row), 1);
+      renderSetInputs(setDetails);
+    });
 
     function renderHistory() {
       const records = weekEntries(selectedWeek);
@@ -601,7 +790,8 @@
       }
       list.innerHTML = records.map(entry => `<div class="entry">
         <div class="entry-main"><div class="entry-date">${escapeHtml(entry.date)}</div>
-        <div class="entry-stats">${formatWeight(entry.weight)} kg ・ ${entry.reps} rep × ${entry.sets} set</div>
+        <div class="entry-stats">${escapeHtml(formatSetDetails(entry))}</div>
+        <div class="entry-stats">総ボリューム：${Math.round(entryVolume(entry)).toLocaleString("ja-JP")} kg</div>
         ${entry.note ? `<div class="entry-note">${escapeHtml(entry.note)}</div>` : ""}</div>
         <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" aria-label="${escapeHtml(entry.date)}の記録を削除">×</button>
       </div>`).join("");
@@ -624,6 +814,73 @@
       showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2600);
     }
 
+    document.getElementById("calendar-prev").addEventListener("click", () => {
+      calendarMonth.setMonth(calendarMonth.getMonth() - 1);
+      renderCalendar();
+    });
+    document.getElementById("calendar-next").addEventListener("click", () => {
+      calendarMonth.setMonth(calendarMonth.getMonth() + 1);
+      renderCalendar();
+    });
+    document.getElementById("calendar-grid").addEventListener("click", event => {
+      const dayButton = event.target.closest(".calendar-day");
+      if (dayButton) openCalendarDate(dayButton.dataset.date);
+    });
+    document.getElementById("close-calendar-button").addEventListener("click", () => {
+      document.getElementById("calendar-dialog").close();
+    });
+    document.getElementById("add-calendar-exercise").addEventListener("click", () => {
+      const rows = readCalendarExerciseRows();
+      if (rows.length >= 20) return;
+      rows.push({ exercise: "BP", weight: "", reps: "" });
+      renderCalendarExerciseRows(rows);
+    });
+    document.getElementById("calendar-exercise-list").addEventListener("click", event => {
+      const button = event.target.closest(".remove-set");
+      if (!button || button.disabled) return;
+      const rows = readCalendarExerciseRows();
+      const index = [...document.querySelectorAll(".calendar-exercise-row")].indexOf(button.closest(".calendar-exercise-row"));
+      rows.splice(index, 1);
+      renderCalendarExerciseRows(rows);
+    });
+    document.getElementById("calendar-entry-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const note = document.getElementById("calendar-note").value.trim();
+      const newEntries = readCalendarExerciseRows().map(row => ({
+        id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        date: selectedCalendarDate,
+        exercise: row.exercise,
+        weight: Number(row.weight),
+        reps: Number(row.reps),
+        note
+      }));
+      calendarLogs.push(...newEntries);
+      if (!saveCalendarLogs()) {
+        calendarLogs.splice(calendarLogs.length - newEntries.length, newEntries.length);
+        return;
+      }
+      document.getElementById("calendar-note").value = "";
+      document.getElementById("calendar-status").textContent = "記録を保存しました。";
+      renderCalendarLogs();
+      renderCalendar();
+      showToast("カレンダーに記録しました");
+    });
+    document.getElementById("calendar-log-list").addEventListener("click", event => {
+      const button = event.target.closest(".delete-entry");
+      if (!button) return;
+      const previousLogs = calendarLogs;
+      calendarLogs = calendarLogs.filter(entry => entry.id !== button.dataset.id);
+      if (!saveCalendarLogs()) {
+        calendarLogs = previousLogs;
+        return;
+      }
+      renderCalendarLogs();
+      renderCalendar();
+      showToast("カレンダーの記録を削除しました");
+    });
+
     document.querySelectorAll(".lift-tab").forEach(tab => {
       tab.addEventListener("click", () => {
         activeLift = tab.dataset.lift;
@@ -634,11 +891,9 @@
         loadPrograms();
         document.getElementById("page-title").textContent = `${exerciseNames[activeLift]} 10週間プログラム`;
         document.title = `Training Log — ${exerciseNames[activeLift]} 10週間プログラム`;
-        calendarMonth = new Date();
         const firstIncomplete = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
         selectWeek(firstIncomplete ? firstIncomplete.week : 1);
         renderSummary();
-        renderCalendar();
       });
     });
 
@@ -708,13 +963,15 @@
       const form = event.currentTarget;
       if (!form.reportValidity()) return;
       const data = new FormData(form);
+      const setDetails = readSetInputs();
       const entry = {
         id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         week: selectedWeek,
         date: String(data.get("date")),
-        weight: Number(data.get("weight")),
-        reps: Number(data.get("reps")),
-        sets: Number(data.get("sets")),
+        weight: setDetails[0].weight,
+        reps: setDetails[0].reps,
+        sets: setDetails.length,
+        setDetails,
         note: String(data.get("note")).trim()
       };
       entries.push(entry);
@@ -722,14 +979,11 @@
         entries.pop();
         return;
       }
-      calendarSelectedDate = entry.date;
-      calendarMonth = new Date(`${entry.date}T00:00:00`);
       document.getElementById("note").value = "";
       document.getElementById("form-status").textContent = "記録を保存しました。";
       renderWeeks();
       renderSummary();
       renderHistory();
-      renderCalendar();
       showToast("トレーニングを記録しました");
     });
 
@@ -738,33 +992,25 @@
       entries = entries.filter(entry => entry.id !== id);
       if (entries.length === originalLength) return;
       if (!saveEntries()) {
-        entries = loadEntries(activeLift);
+        entries = loadEntries();
         renderWeeks();
         renderSummary();
         renderHistory();
-        renderCalendar();
         return;
       }
       renderWeeks();
       renderSummary();
       renderHistory();
-      renderCalendar();
       showToast("記録を削除しました");
     }
 
-    document.getElementById("prev-month").addEventListener("click", () => {
-      calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1);
-      renderCalendar();
-    });
-    document.getElementById("next-month").addEventListener("click", () => {
-      calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1);
-      renderCalendar();
-    });
-
     document.getElementById("export-button").addEventListener("click", () => {
-      const rows = [["種目", "週", "日付", "重量(kg)", "レップ数", "セット数", "メモ"]];
+      const rows = [["種目", "週", "日付", "セット内訳", "総ボリューム(kg)", "メモ"]];
       entries.slice().sort((a, b) => a.week - b.week || a.date.localeCompare(b.date)).forEach(entry => {
-        rows.push([exerciseNames[activeLift], `第${entry.week}週`, entry.date, entry.weight, entry.reps, entry.sets, entry.note]);
+        rows.push([exerciseNames[activeLift], `第${entry.week}週`, entry.date, formatSetDetails(entry), entryVolume(entry), entry.note]);
+      });
+      calendarLogs.slice().sort((a, b) => a.date.localeCompare(b.date) || a.exercise.localeCompare(b.exercise)).forEach(entry => {
+        rows.push([entry.exercise, "", entry.date, `${formatWeight(entry.weight)}kg×${entry.reps}`, entry.weight * entry.reps, entry.note]);
       });
       const csv = "\uFEFF" + rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
@@ -778,9 +1024,8 @@
 
     const today = new Date();
     const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    calendarMonth = new Date(`${localToday}T00:00:00`);
-    calendarSelectedDate = localToday;
     document.getElementById("session-date").value = localToday;
+    renderCalendar();
     loadPrograms();
     document.getElementById("page-title").textContent = `${exerciseNames[activeLift]} 10週間プログラム`;
     document.title = `Training Log — ${exerciseNames[activeLift]} 10週間プログラム`;
@@ -788,7 +1033,6 @@
     selectedWeek = firstIncomplete ? firstIncomplete.week : 1;
     selectWeek(selectedWeek);
     renderSummary();
-    renderCalendar();
   </script>
 </body>
 </html>
