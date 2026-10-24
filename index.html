@@ -297,7 +297,7 @@
 
     <section class="calendar-section" aria-labelledby="calendar-title">
       <div class="section-head">
-        <div><h2 id="calendar-title">トレーニングカレンダー</h2><p class="section-hint">日付を押して、BP・SW・DR・RPの記録を追加できます。</p></div>
+        <div><h2 id="calendar-title">トレーニングカレンダー</h2><p class="section-hint">10週プログラムの記録はS・Dと最初のセット重量で表示。日付を押してBP・RPも記録できます。</p></div>
       </div>
       <div class="panel calendar-panel">
         <div class="calendar-heading">
@@ -366,7 +366,7 @@
   </dialog>
   <dialog class="calendar-dialog" id="calendar-dialog" aria-labelledby="calendar-dialog-title">
     <div class="calendar-dialog-header">
-      <div><h2 id="calendar-dialog-title"></h2><div class="target-line">種目ごとの重量・レップ数・メモを記録できます。</div></div>
+      <div><h2 id="calendar-dialog-title"></h2><div class="target-line">10週プログラムの記録と、追加種目BP・RPを確認・記録できます。</div></div>
       <button class="editor-close" id="close-calendar-button" type="button" aria-label="閉じる">×</button>
     </div>
     <div class="calendar-dialog-body">
@@ -418,6 +418,7 @@
     const planStorageKeys = { squat: "training-plan-squat-v1", deadlift: "training-plan-deadlift-v1" };
     const calendarStorageKey = "training-log-calendar-v1";
     const calendarExercises = ["BP", "SW", "DR", "RP"];
+    const calendarManualExercises = ["BP", "RP"];
     let activeLift = "squat";
     let selectedWeek = 1;
     let entries = loadEntries(activeLift);
@@ -529,15 +530,43 @@
       }
     }
 
-    function saveEntries() {
+    function saveEntries(lift = activeLift, records = entries) {
       try {
-        localStorage.setItem(storageKeys[activeLift], JSON.stringify(entries));
+        localStorage.setItem(storageKeys[lift], JSON.stringify(records));
         return true;
       } catch (error) {
         console.error("トレーニング記録を保存できませんでした。", error);
         showToast("保存できませんでした。ブラウザーの空き容量を確認してください。");
         return false;
       }
+    }
+
+    function programCalendarEntries() {
+      return ["squat", "deadlift"].flatMap(lift => {
+        const liftEntries = lift === activeLift ? entries : loadEntries(lift);
+        const code = lift === "squat" ? "S" : "D";
+        return liftEntries.map(entry => {
+          const firstSet = entrySets(entry)[0];
+          return {
+            id: entry.id,
+            date: entry.date,
+            exercise: code,
+            weight: firstSet.weight,
+            reps: firstSet.reps,
+            note: entry.note,
+            week: entry.week,
+            lift,
+            source: "program"
+          };
+        });
+      });
+    }
+
+    function calendarEntriesForDate(date) {
+      return [
+        ...programCalendarEntries().filter(entry => entry.date === date),
+        ...calendarLogs.filter(entry => entry.date === date).map(entry => ({ ...entry, source: "calendar" }))
+      ];
     }
 
     function formatWeight(value) {
@@ -564,8 +593,8 @@
       const days = Array.from({ length: daysInMonth }, (_, index) => {
         const day = index + 1;
         const date = formatDateKey(year, monthIndex, day);
-        const dayLogs = calendarLogs.filter(entry => entry.date === date);
-        const exercises = [...new Set(dayLogs.map(entry => entry.exercise))].join("・");
+        const dayLogs = calendarEntriesForDate(date);
+        const exercises = dayLogs.map(entry => `${entry.exercise}${formatWeight(entry.weight)}`).join("・");
         const classes = ["calendar-day", date === todayKey ? "today" : "", dayLogs.length ? "has-log" : ""].filter(Boolean).join(" ");
         const summary = dayLogs.length
           ? `<span class="calendar-day-exercises">${escapeHtml(exercises)}</span><span class="calendar-day-count">${dayLogs.length}件</span>`
@@ -583,7 +612,7 @@
           <div class="field">
             <label for="calendar-exercise-${index}">種目</label>
             <select id="calendar-exercise-${index}" name="exercise" required>
-              ${calendarExercises.map(exercise => `<option value="${exercise}"${row.exercise === exercise ? " selected" : ""}>${exercise}</option>`).join("")}
+              ${calendarManualExercises.map(exercise => `<option value="${exercise}"${row.exercise === exercise ? " selected" : ""}>${exercise}</option>`).join("")}
             </select>
           </div>
           <div class="field">
@@ -610,18 +639,18 @@
 
     function renderCalendarLogs() {
       const list = document.getElementById("calendar-log-list");
-      const dayLogs = calendarLogs.filter(entry => entry.date === selectedCalendarDate);
+      const dayLogs = calendarEntriesForDate(selectedCalendarDate);
       if (!dayLogs.length) {
         list.innerHTML = '<div class="calendar-empty">この日の記録はまだありません。</div>';
         return;
       }
       list.innerHTML = dayLogs.map(entry => `<div class="calendar-log">
         <div class="calendar-log-main">
-          <div class="calendar-log-exercise">${escapeHtml(entry.exercise)}</div>
+          <div class="calendar-log-exercise">${escapeHtml(entry.exercise)}${entry.source === "program" ? `（${entry.lift === "squat" ? "スクワット" : "デッドリフト"}・第${entry.week}週）` : ""}</div>
           <div class="calendar-log-details">${formatWeight(entry.weight)}kg × ${entry.reps} rep</div>
           ${entry.note ? `<div class="calendar-log-note">${escapeHtml(entry.note)}</div>` : ""}
         </div>
-        <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" aria-label="${escapeHtml(entry.exercise)}の記録を削除">×</button>
+        <button class="delete-entry" type="button" data-id="${escapeHtml(entry.id)}" data-source="${entry.source}"${entry.lift ? ` data-lift="${entry.lift}"` : ""} aria-label="${escapeHtml(entry.exercise)}の記録を削除">×</button>
       </div>`).join("");
     }
 
@@ -870,6 +899,22 @@
     document.getElementById("calendar-log-list").addEventListener("click", event => {
       const button = event.target.closest(".delete-entry");
       if (!button) return;
+      if (button.dataset.source === "program") {
+        const lift = button.dataset.lift;
+        if (lift === activeLift) {
+          deleteEntry(button.dataset.id);
+          renderCalendarLogs();
+          return;
+        }
+        const previousEntries = loadEntries(lift);
+        const updatedEntries = previousEntries.filter(entry => entry.id !== button.dataset.id);
+        if (updatedEntries.length === previousEntries.length) return;
+        if (!saveEntries(lift, updatedEntries)) return;
+        renderCalendarLogs();
+        renderCalendar();
+        showToast("10週プログラムの記録を削除しました");
+        return;
+      }
       const previousLogs = calendarLogs;
       calendarLogs = calendarLogs.filter(entry => entry.id !== button.dataset.id);
       if (!saveCalendarLogs()) {
@@ -894,6 +939,7 @@
         const firstIncomplete = currentProgram().find(item => !entries.some(entry => entry.week === item.week));
         selectWeek(firstIncomplete ? firstIncomplete.week : 1);
         renderSummary();
+        renderCalendar();
       });
     });
 
@@ -984,6 +1030,7 @@
       renderWeeks();
       renderSummary();
       renderHistory();
+      renderCalendar();
       showToast("トレーニングを記録しました");
     });
 
@@ -1001,6 +1048,7 @@
       renderWeeks();
       renderSummary();
       renderHistory();
+      renderCalendar();
       showToast("記録を削除しました");
     }
 
